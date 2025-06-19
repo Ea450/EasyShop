@@ -12,3 +12,15 @@ type User = {
     image?: string;
     accountId: string;
 };
+interface ProductCardProps {
+    id: number;
+    title: string;
+    price: number;
+    description: string;
+    category: string;
+    image: string;
+}
+interface ProductsPagerProps {
+    productsNumber: number;
+    Products: Product[];
+}

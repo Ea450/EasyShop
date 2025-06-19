@@ -13,6 +13,7 @@
     "@radix-ui/react-progress": "^1.1.4",
     "@radix-ui/react-slot": "^1.2.0",
     "@supabase/supabase-js": "^2.50.0",
+    "@syncfusion/ej2-react-grids": "^29.2.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.501.0",
