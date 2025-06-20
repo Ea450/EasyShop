@@ -1,6 +1,7 @@
 'use server'
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "../supabase"
+import { revalidatePath } from "next/cache";
 // all products functions
 export const SaveProductToSupabase = async () => {
     const response = await fetch('https://api.escuelajs.co/api/v1/products');
@@ -36,11 +37,27 @@ export const addToFavorite = async (productId: number) => {
     });
     if (error) throw new Error(error.message);
 }
-export const removeFromFavorite = async (product_id: number) => {
+export const removeFromFavorite = async (product_id: number, path: string) => {
     const userId = (await auth()).userId;
     const supabase = createSupabaseClient();
     const { error } = await supabase.from('favorite').delete().eq('id', product_id).eq('user_id', userId)
     if (error) throw new Error(error.message);
+    revalidatePath(path);
+
+}
+export const getFavoriteProducts = async (userId: string) => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase.from('favorite').select('*').eq('user_id', userId);
+    if (error) throw new Error(error.message);
+    return data;
+}
+export const getFavotiteProducts = async (userId: string) => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase.from('favorite').select(`products:id (*)`).eq('user_id', userId);
+
+
+    if (error) throw new Error(error.message);
+    return data;
 }
 
 // cart functions
@@ -53,4 +70,19 @@ export const addToCart = async (productId: number) => {
         product_id: productId,
     });
     if (error) throw new Error(error.message);
+}
+export const removeFromCart = async (product_id: number, path: string) => {
+    const userId = (await auth()).userId;
+    const supabase = createSupabaseClient();
+    const { error } = await supabase.from('cart').delete().eq('id', product_id).eq('user_id', userId)
+    if (error) throw new Error(error.message);
+    revalidatePath(path);
+}
+export const getCartProducts = async (userId: string) => {
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase.from('cart').select(`products:id (*)`).eq('user_id', userId);
+
+
+    if (error) throw new Error(error.message);
+    return data;
 }

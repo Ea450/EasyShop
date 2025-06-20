@@ -26,7 +26,7 @@ const ProductsPager = ({ productsNumber, Products }: ProductsPagerProps) => {
     return (
 
         <section>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 items-center justify-center">
                 {pagedProducts.map(({ id, title, price, category, description, image }: Product) => (
                     <div key={id} className="flex gap-2 ">
                         <ProductCard id={id} title={title} price={price} category={category} description={description} image={image} />
