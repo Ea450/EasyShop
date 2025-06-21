@@ -1,16 +1,15 @@
 'use client'
-import { PagerComponent } from "@syncfusion/ej2-react-grids"
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useState } from "react";
 import ProductCard from "./ProductCard";
-import { registerLicense } from "@syncfusion/ej2-base";
-import '@syncfusion/ej2-react-grids/styles/material.css';
+import ReactPaginate from "react-paginate";
 
 
-registerLicense('Ngo9BigBOggjHTQxAR8/V1NNaF1cXGJCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXlfd3ZXRmJZUkJzXUVWYUA=');
 
-const ProductsPager = ({ productsNumber, Products }: ProductsPagerProps) => {
+const ProductsPager = ({ Products }: ProductsPagerProps) => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const initialPage = Number(searchParams.get('page') || '1')
     const start = (initialPage - 1) * 6;
     const end = start + 6;
@@ -20,8 +19,7 @@ const ProductsPager = ({ productsNumber, Products }: ProductsPagerProps) => {
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
-
-        window.location.search = `?page=${page}`
+        router.push(`?page=${page}`);
     }
 
 
@@ -35,13 +33,15 @@ const ProductsPager = ({ productsNumber, Products }: ProductsPagerProps) => {
                     </div>
                 ))}
             </div>
-            <PagerComponent
-                totalRecordsCount={productsNumber}
-                pageSize={8}
-                currentPage={currentPage}
-                click={(args) => handlePageChange(args.currentPage)}
-            // cssClass="custom-pager"
+            <ReactPaginate
+                pageCount={10}
+                pageRangeDisplayed={10}
+                onPageChange={(args) => handlePageChange(args.selected + 1)}
+                containerClassName="flex space-x-4"
+                activeClassName="bg-blue-500 text-white px-3 py-1 rounded cursor-pointer"
+                className="flex items-center justify-center mt-4 space-x-4 cursor-pointer"
             />
+
         </section>
 
     )
