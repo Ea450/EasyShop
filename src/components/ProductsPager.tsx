@@ -4,14 +4,16 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import ProductCard from "./ProductCard";
 import { registerLicense } from "@syncfusion/ej2-base";
+import '@syncfusion/ej2-react-grids/styles/material.css';
+
 
 registerLicense('Ngo9BigBOggjHTQxAR8/V1NNaF1cXGJCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXlfd3ZXRmJZUkJzXUVWYUA=');
 
 const ProductsPager = ({ productsNumber, Products }: ProductsPagerProps) => {
     const searchParams = useSearchParams();
     const initialPage = Number(searchParams.get('page') || '1')
-    const start = (initialPage - 1) * 8;
-    const end = start + 8;
+    const start = (initialPage - 1) * 6;
+    const end = start + 6;
 
     const [currentPage, setCurrentPage] = useState(initialPage);
     const pagedProducts = Products.slice(start, end);
@@ -27,9 +29,9 @@ const ProductsPager = ({ productsNumber, Products }: ProductsPagerProps) => {
 
         <section>
             <div className="flex flex-wrap gap-2 items-center justify-center">
-                {pagedProducts.map(({ id, title, price, category, description, image }: Product) => (
+                {pagedProducts.map(({ id, title, price, category, description, image, loved }: Product) => (
                     <div key={id} className="flex gap-2 ">
-                        <ProductCard id={id} title={title} price={price} category={category} description={description} image={image} />
+                        <ProductCard id={id} title={title} price={price} category={category} description={description} image={image} loved={loved} />
                     </div>
                 ))}
             </div>

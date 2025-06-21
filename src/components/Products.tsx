@@ -6,6 +6,7 @@ import Pager from "./ProductsPager";
 const Products = async () => {
 
     const Products = await getProducts();
+
     return (
         <div className="p-4">
             <Pager productsNumber={Products.length} Products={Products} />

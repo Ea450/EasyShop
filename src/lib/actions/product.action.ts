@@ -14,7 +14,8 @@ export const SaveProductToSupabase = async () => {
             price: price,
             description: description,
             category: category,
-            image: Array.isArray(image) ? image[0] : image
+            image: Array.isArray(image) ? image[0] : image,
+            loved: false,
         }).select();
         if (error) throw new Error(error.message);
     }
@@ -27,7 +28,7 @@ export const getProducts = async () => {
     return data;
 }
 // favorite functions
-export const addToFavorite = async (productId: number) => {
+export const addToFavorite = async (productId: number, path: string) => {
     const { userId } = await auth();
     const supabase = createSupabaseClient();
     const { error } = await supabase.from('favorite').insert({
@@ -35,27 +36,26 @@ export const addToFavorite = async (productId: number) => {
         user_id: userId,
         product_id: productId,
     });
+    await supabase.from('products').update({
+        loved: true
+    }).eq('id', productId)
     if (error) throw new Error(error.message);
+    revalidatePath(path);
 }
-export const removeFromFavorite = async (product_id: number, path: string) => {
+export const removeFromFavorite = async (productId: number, path: string) => {
     const userId = (await auth()).userId;
     const supabase = createSupabaseClient();
-    const { error } = await supabase.from('favorite').delete().eq('id', product_id).eq('user_id', userId)
+    const { error } = await supabase.from('favorite').delete().eq('id', productId).eq('user_id', userId)
+    await supabase.from('products').update({
+        loved: false
+    }).eq('id', productId)
     if (error) throw new Error(error.message);
     revalidatePath(path);
 
 }
 export const getFavoriteProducts = async (userId: string) => {
     const supabase = createSupabaseClient();
-    const { data, error } = await supabase.from('favorite').select('*').eq('user_id', userId);
-    if (error) throw new Error(error.message);
-    return data;
-}
-export const getFavotiteProducts = async (userId: string) => {
-    const supabase = createSupabaseClient();
     const { data, error } = await supabase.from('favorite').select(`products:id (*)`).eq('user_id', userId);
-
-
     if (error) throw new Error(error.message);
     return data;
 }
@@ -71,10 +71,13 @@ export const addToCart = async (productId: number) => {
     });
     if (error) throw new Error(error.message);
 }
-export const removeFromCart = async (product_id: number, path: string) => {
+export const removeFromCart = async (productId: number, path: string) => {
     const userId = (await auth()).userId;
     const supabase = createSupabaseClient();
-    const { error } = await supabase.from('cart').delete().eq('id', product_id).eq('user_id', userId)
+    const { error } = await supabase.from('cart').delete().eq('id', productId).eq('user_id', userId)
+    await supabase.from('products').update({
+        quntity: 1
+    }).eq('id', productId)
     if (error) throw new Error(error.message);
     revalidatePath(path);
 }
@@ -85,4 +88,22 @@ export const getCartProducts = async (userId: string) => {
 
     if (error) throw new Error(error.message);
     return data;
+}
+export const quntityInrcrease = async (productId: number, quntity: number, path: string) => {
+    const supabase = createSupabaseClient();
+    const { error } = await supabase.from('products').update({
+        quntity: quntity + 1
+    }).eq('id', productId)
+    if (error) throw new Error(error.message)
+    revalidatePath(path);
+
+}
+export const quntityDercrease = async (productId: number, quntity: number, path: string) => {
+    const supabase = createSupabaseClient();
+    const { error } = await supabase.from('products').update({
+        quntity: quntity - 1
+    }).eq('id', productId)
+    if (error) throw new Error(error.message)
+    revalidatePath(path);
+
 }

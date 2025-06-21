@@ -5,6 +5,8 @@ interface Product {
     description: string;
     category: string;
     image: string;
+    loved: boolean;
+    quntity?: number;
 }
 type User = {
     name: string;
@@ -19,6 +21,8 @@ interface ProductCardProps {
     description: string;
     category: string;
     image: string;
+    loved: boolean;
+    quntity?: number;
 }
 interface ProductsPagerProps {
     productsNumber: number;

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { hostname: '*' }
     ]
-  }
+  }, reactStrictMode: true,
 };
 
 export default nextConfig;
