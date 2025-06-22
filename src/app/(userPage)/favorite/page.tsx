@@ -10,7 +10,7 @@ const favorite = async () => {
     const cartProductGroups = await getFavoriteProducts(userId);
     const cartProducts: Product[] = cartProductGroups.flatMap(group => group.products);
     return (
-        <main className="p-6 md:flex gap-6 flex-wrap items-center justify-center">
+        <main className="p-6 md:flex gap-6 flex-wrap justify-center">
             <div>
                 {cartProducts.length === 0 && (
                     <div>

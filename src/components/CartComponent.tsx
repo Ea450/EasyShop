@@ -26,7 +26,7 @@ const CartComponent = ({ id, description, image, price, title, quntity }: Produc
                         )}
                     </div>
                 </div>
-                <button className="mt-4 w-full bg-yellow-800 text-white border border-yellow-800 hover:border-yellow-800 py-2 rounded-full text-sm hover:bg-white hover:text-yellow-800 transition cursor-pointer" onClick={() => removeFromCart(id, pathname)}>
+                <button className="button" onClick={() => removeFromCart(id, pathname)}>
                     Remove from cart
                 </button>
             </div>

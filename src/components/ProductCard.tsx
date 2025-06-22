@@ -26,7 +26,7 @@ const ProductCard = ({ id, price, title, description, image, loved }: ProductCar
                 <div className="w-full aspect-square flex items-center justify-center">
                     <Image src={image} alt="title" width={200} height={100} className="object-cover rounded-xl" />
                 </div>
-                {pathname === '/' && <button
+                {pathname === '/products' && <button
                     className="absolute top-2 left-2 flex items-center space-x-1 text-sm text-red-300 bg-white bg-opacity-75 px-2 py-1 rounded-full shadow"
                     onClick={handleLiked}
                 >
@@ -44,13 +44,13 @@ const ProductCard = ({ id, price, title, description, image, loved }: ProductCar
                     {description}
                 </p>
 
-                {pathname === '/cart' ? (<button className="mt-4 w-full bg-yellow-800 text-white border border-yellow-800 hover:border-yellow-800 py-2 rounded-full text-sm hover:bg-white hover:text-yellow-800 transition cursor-pointer" onClick={() => removeFromCart(id, pathname)}>
+                {pathname === '/cart' ? (<button className="button" onClick={() => removeFromCart(id, pathname)}>
                     Remove From Cart
                 </button>
-                ) : (<button className="mt-4 w-full bg-yellow-800 text-white border border-yellow-800 hover:border-yellow-800 py-2 rounded-full text-sm hover:bg-white hover:text-yellow-800 transition cursor-pointer" onClick={() => addToCart(id)}>
+                ) : (<button className="button" onClick={() => addToCart(id)}>
                     Add To Cart
                 </button>)}
-                {pathname === '/favorite' && <button className="mt-4 w-full bg-yellow-800 text-white border border-yellow-800 hover:border-yellow-800 py-2 rounded-full text-sm hover:bg-white hover:text-yellow-800 transition cursor-pointer" onClick={() => removeFromFavorite(id, pathname)}>
+                {pathname === '/favorite' && <button className="button" onClick={() => removeFromFavorite(id, pathname)}>
                     Remove from favorite
                 </button>}
             </div>
