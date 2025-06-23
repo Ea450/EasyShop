@@ -28,7 +28,7 @@ export const getProducts = async () => {
     return data;
 }
 // favorite functions
-export const addToFavorite = async (productId: number, path: string) => {
+export const addToFavorite = async (productId: number) => {
     const { userId } = await auth();
     const supabase = createSupabaseClient();
     const { error } = await supabase.from('favorite').insert({
@@ -40,9 +40,9 @@ export const addToFavorite = async (productId: number, path: string) => {
         loved: true
     }).eq('id', productId)
     if (error) throw new Error(error.message);
-    revalidatePath(path);
+
 }
-export const removeFromFavorite = async (productId: number, path: string) => {
+export const removeFromFavorite = async (productId: number, path?: string) => {
     const userId = (await auth()).userId;
     const supabase = createSupabaseClient();
     const { error } = await supabase.from('favorite').delete().eq('id', productId).eq('user_id', userId)
@@ -50,7 +50,7 @@ export const removeFromFavorite = async (productId: number, path: string) => {
         loved: false
     }).eq('id', productId)
     if (error) throw new Error(error.message);
-    revalidatePath(path);
+    if (path) revalidatePath(path);
 
 }
 export const getFavoriteProducts = async (userId: string) => {
@@ -84,7 +84,6 @@ export const removeFromCart = async (productId: number, path: string) => {
 export const getCartProducts = async (userId: string) => {
     const supabase = createSupabaseClient();
     const { data, error } = await supabase.from('cart').select(`products:id (*)`).eq('user_id', userId);
-
 
     if (error) throw new Error(error.message);
     return data;

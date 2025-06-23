@@ -1,4 +1,6 @@
+
 import CartComponent from "@/components/CartComponent";
+import StripeComponent from "@/components/StripeComponent";
 import { getCartProducts } from "@/lib/actions/product.action"
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
@@ -10,6 +12,10 @@ const Cart = async () => {
     if (!userId) redirect('/sign-in')
     const cartProductGroups = await getCartProducts(userId);
     const cartProducts: Product[] = cartProductGroups.flatMap(group => group.products);
+    const totalPrice = cartProducts.reduce(
+        (sum, product) => sum + product.price * (product.quntity ?? 1),
+        0
+    );
     return (
         <main className="p-6 md:flex gap-6 flex-wrap justify-center">
             <div>
@@ -37,6 +43,9 @@ const Cart = async () => {
                     />
                 ))}
             </div>
+            {cartProducts.length > 0 && (
+                <StripeComponent totalPrice={totalPrice} cartProducts={cartProducts} />
+            )}
         </main>
     )
 }

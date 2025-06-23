@@ -28,3 +28,14 @@ interface ProductsPagerProps {
     productsNumber: number;
     Products: Product[];
 }
+type CartProduct = {
+    title: string;
+    image: string;
+    price: number;
+    quntity?: number;
+};
+
+interface StripeComponentProps {
+    totalPrice: number;
+    cartProducts: Product[];
+};

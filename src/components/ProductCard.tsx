@@ -13,11 +13,11 @@ const ProductCard = ({ id, price, title, description, image, loved }: ProductCar
     const discountedPrice = (price - (price * 30 / 100)).toFixed(2)
     const handleLiked = () => {
         if (liked) {
-            setLiked(!loved);
-            removeFromFavorite(id, pathname)
+            removeFromFavorite(id)
+            setLiked(false);
         } if (!liked) {
-            setLiked(!loved)
-            addToFavorite(id, pathname)
+            addToFavorite(id)
+            setLiked(true)
         }
     }
     return (
@@ -35,7 +35,7 @@ const ProductCard = ({ id, price, title, description, image, loved }: ProductCar
                 </button>}
             </div>
             <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+                <h3 className="text-xl font-semibold text-yellow-800 text-center">{title}</h3>
                 <div className="flex items-baseline space-x-2 mt-1">
                     <span className="text-lg font-bold text-gray-800">{(discountedPrice)}$</span>
                     <span className="line-through text-gray-400 text-sm">{price}$</span>
