@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getProducts } from "@/lib/actions/product.action"
 import Pager from "../../../components/ProductsPager";
 import { auth } from "@clerk/nextjs/server";
