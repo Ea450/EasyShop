@@ -24,6 +24,7 @@ const favorite = async () => {
             {cartProducts.map(({ id, title, price, category, description, image, loved }) => (
                 <ProductCard key={id} id={id} title={title} price={price} category={category} description={description} image={image} loved={loved} />
             ))}
+
         </main>
     )
 }

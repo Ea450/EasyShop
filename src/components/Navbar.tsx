@@ -13,7 +13,7 @@ const Navbar = () => {
         <div>
             <header className="flex items-center justify-between shadow-md min-h-[67px] shadow-[#eee] bg-white md:py-3 py-1.5 lg:px-16 md:px-8 px-3 relative z-20 overflow-x-clip">
                 <Link href='/products' className="flex items-center">
-                    <Image src='/images/easyshop2.png' alt="logo" width={36} height={36} />
+                    <Image src='/images/easyshop.png' alt="logo" width={36} height={36} />
                     <p className="text-bold text-yellow-700">EasyShop</p>
                 </Link>
                 <div className="flex justify-end items-center p-4 gap-4 h-16">

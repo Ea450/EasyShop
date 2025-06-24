@@ -9,11 +9,12 @@ const images = [
     '/images/product1.jpg',
     '/images/product6.jpg',
     '/images/product4.jpg',
-    '/images/product2.jpg',
+    '/images/product9.jpg',
     '/images/product8.jpg',
     '/images/product3.jpg',
     '/images/product5.jpg',
     '/images/product7.jpg',
+    '/images/product2.jpg',
 ];
 
 const Advertisement = () => {

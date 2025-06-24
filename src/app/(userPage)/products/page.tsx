@@ -4,6 +4,7 @@ import Pager from "../../../components/ProductsPager";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Advertisement from "@/components/Advertisement";
+import Footer from "@/components/Footer";
 
 
 
@@ -15,9 +16,12 @@ const Products = async () => {
     if (!user.isAuthenticated) redirect('/sign-in')
 
     return (
-        <div className="p-4">
-            <Advertisement />
-            <Pager productsNumber={Products.length} Products={Products} />
+        <div>
+            <div className="p-4">
+                <Advertisement />
+                <Pager productsNumber={Products.length} Products={Products} />
+            </div>
+            <Footer />
         </div>
     )
 }
